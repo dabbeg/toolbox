@@ -1,0 +1,14 @@
+version: '3'
+services:
+    dns:
+        image: andyshinn/dnsmasq:2.76
+        container_name: dnsmasq
+        volumes:
+            - ./conf/dnsmasq.conf:/etc/dnsmasq.conf
+            - /etc/hosts:/etc/host_hosts
+        restart: always
+        ports:
+            - '53:53/tcp'
+            - '53:53/udp'
+        cap_add:
+            - NET_ADMIN
