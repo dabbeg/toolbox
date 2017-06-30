@@ -1,0 +1,33 @@
+version: '3'
+
+services:
+    nginx-gen:
+        depends_on:
+            - nginx
+        image: jwilder/docker-gen
+        container_name: nginx-gen
+        command: -notify-sighup nginx -watch -only-exposed /etc/docker-gen/templates/nginx.tmpl /etc/nginx/conf.d/default.conf
+        volumes:
+            - nginx_data:/etc/nginx/conf.d
+            - /var/run/docker.sock:/tmp/docker.sock:ro
+            - ./templates:/etc/docker-gen/templates
+        networks:
+            - nginx-proxy
+
+    nginx:
+        image: nginx
+        container_name: nginx
+        ports:
+            - "80:80"
+        volumes:
+            - nginx_data:/etc/nginx/conf.d
+        networks:
+            - nginx-proxy
+
+volumes:
+    nginx_data:
+
+networks:
+    nginx-proxy:
+        external:
+            name: nginx-proxy
