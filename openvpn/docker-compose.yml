@@ -9,4 +9,7 @@ services:
         cap_add:
             - NET_ADMIN
         volumes:
-            - ./conf:/etc/openvpn
+            - openvpn_data:/etc/openvpn
+
+volumes:
+    openvpn_data:
