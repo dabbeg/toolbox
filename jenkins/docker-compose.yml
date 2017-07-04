@@ -1,0 +1,25 @@
+version: '3'
+
+services:
+    jenkins:
+        image: jenkins:2.60.1
+        container_name: jenkins
+        restart: always
+        ports:
+            - "8080:8080"
+            - "5000:5000"
+        environment:
+            VIRTUAL_HOST: jenkins.local
+            VIRTUAL_PORT: 8080
+        volumes:
+            - jenkins_data:/var/jenkins_home
+        networks:
+            - nginx-proxy
+
+volumes:
+    jenkins_data:
+
+networks:
+    nginx-proxy:
+        external:
+            name: nginx-proxy
