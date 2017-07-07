@@ -16,6 +16,17 @@ services:
         networks:
             - nginx-proxy
 
+    jenkins-nginx-webhook-proxy:
+        image: nginx:1.12.0
+        container_name: jekins-nginx-webhook-proxy
+        restart: always
+        ports:
+            - "9000:80"
+        volumes:
+            - ./conf/nginx/conf.d:/etc/nginx/conf.d
+        networks:
+            - nginx-proxy
+
 volumes:
     jenkins_data:
 
