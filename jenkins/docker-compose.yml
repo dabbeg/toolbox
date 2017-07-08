@@ -2,7 +2,7 @@ version: '3'
 
 services:
     jenkins:
-        image: jenkins:2.60.1
+        build: .
         container_name: jenkins
         restart: always
         ports:
@@ -13,6 +13,7 @@ services:
             VIRTUAL_PORT: 8080
         volumes:
             - jenkins_data:/var/jenkins_home
+            - /var/run/docker.sock:/var/run/docker.sock
         networks:
             - nginx-proxy
 
