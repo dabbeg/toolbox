@@ -1,9 +1,18 @@
 FROM jenkins:2.60.1
 USER root
 
+# Installing nodejs
+RUN curl -sL https://deb.nodesource.com/setup_7.x | bash - && \
+    apt-get update && apt-get install -y nodejs
+
+# Installing yarn as node package manager
+RUN apt-get update && apt-get install -y apt-transport-https && \
+    curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - && \
+    echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list && \
+    apt-get update && apt-get install -y yarn
+
 # Install the docker dependancies and client
-RUN apt-get update && \
-    apt-get install -y \
+RUN apt-get install -y \
     iptables \
     init-system-helpers \
     libapparmor1 \
