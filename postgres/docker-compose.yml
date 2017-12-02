@@ -1,0 +1,19 @@
+version: '3'
+
+services:
+    postgres:
+        image: postgres:10.1
+        container_name: postgres
+        restart: always
+        ports:
+            - "5432:5432"
+        volumes:
+            - /mnt/postgres/data:/var/lib/postgresql/data
+        networks:
+            nginx-proxy:
+                ipv4_address: 172.28.0.22
+
+networks:
+    nginx-proxy:
+        external:
+            name: nginx-proxy
